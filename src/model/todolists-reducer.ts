@@ -79,12 +79,12 @@ export const removeTodolistAC=(id:string)=>{
         },
     } as const
 }
-export const addTodolistAC=(title:string)=> {
+export const addTodolistAC=(title:string, todolistId: string)=> {
     return {
         type: 'ADD-TODOLIST',
         payload: {
             title,
-			todolistId: v1()
+			todolistId
         },
     } as const
 }

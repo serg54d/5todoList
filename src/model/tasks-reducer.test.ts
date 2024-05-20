@@ -132,7 +132,8 @@ test('new property with new array should be added when new todolist is added ', 
 	}
 
 	// 2. Действие
-	const action = addTodolistAC('title no metter ')
+	const todolistId = v1()
+	const action = addTodolistAC('title no metter', todolistId)
 	const endState = tasksReducer(startState, action)
 	const keys = Object.keys(endState)
 	const newKey = keys.find(k => k != todolistId1 && k != todolistId2)

@@ -36,6 +36,20 @@ export type UpdateTaskActionType = {
 	}
 }
 
+export type RemoveTasksForTodolistActionType = {
+	type: 'REMOVE-TASKS-FOR-TODOLIST'
+	payload: {
+		todolistId: string
+	}
+}
+
+export type InitializeTasksForTodolistActionType = {
+	type: 'INITIALIZE-TASKS-FOR-TODOLIST'
+	payload: {
+		todolistId: string
+	}
+}
+
 type ActionsType =
 	| RemoveTaskActionType
 	| AddTaskActionType
@@ -43,6 +57,8 @@ type ActionsType =
 	| UpdateTaskActionType
 	| AddTodolistActionType
 	| RemoveTodolistActionType
+	| RemoveTasksForTodolistActionType
+	|InitializeTasksForTodolistActionType
 
 let todolistID1 = v1()
 let todolistID2 = v1()
@@ -108,6 +124,17 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
 			delete stateCopy[action.payload.id]
 			return stateCopy
 		}
+		case 'REMOVE-TASKS-FOR-TODOLIST': {
+			const stateCopy = { ...state };
+			delete stateCopy[action.payload.todolistId];
+			return stateCopy;
+		}
+
+		case 'INITIALIZE-TASKS-FOR-TODOLIST': {
+			const stateCopy = { ...state };
+			stateCopy[action.payload.todolistId] = [];
+			return stateCopy;
+		}
 		default:
 			return state
 	}
@@ -150,6 +177,24 @@ export const updateTaskAC = (taskId: string, title: string, todolistId: string):
 		payload: {
 			taskId,
 			title,
+			todolistId,
+		},
+	} as const
+}
+
+export const removeTasksForTodolistAC = (todolistId: string): RemoveTasksForTodolistActionType => {
+	return {
+		type: 'REMOVE-TASKS-FOR-TODOLIST',
+		payload: {
+			todolistId,
+		},
+	} as const
+}
+
+export const initializeTasksForTodolistAC = (todolistId: string): InitializeTasksForTodolistActionType => {
+	return {
+		type: 'INITIALIZE-TASKS-FOR-TODOLIST',
+		payload: {
 			todolistId,
 		},
 	} as const
